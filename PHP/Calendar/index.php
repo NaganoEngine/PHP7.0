@@ -69,7 +69,7 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 <table>
 <thead>
 <tr>
-<!--------------------Month Link-------------------------------->
+<!--Month Link-------------------------------->
 <th><a href="/?m=<?php echo h($prev); ?>">&laquo;</a></th>
 <th colspan="5"><?php echo $yearMonth?></th>
 <th><a href="/?m=<?php echo h($next); ?>">&raquo;</a></th>
@@ -86,7 +86,7 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 <td>Sat</td>
 </tr>
 <tr>
-<!----------------------------Dateperiod-------------------------------->
+<!--Dateperiod-------------------------------->
 <?php echo $html;?>
 <!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
@@ -108,7 +108,7 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 </tbody>
 <tfoot>
 <tr>
-<!------------------Today Link------------------------------->
+<!--Today Link------------------------------->
 <th colspan="7"><a href="/">Today</a></th>
 </tr>
 </tfoot>
