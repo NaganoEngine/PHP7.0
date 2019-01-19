@@ -1,31 +1,58 @@
 <?php
-$t = '2019-12';
-$thisMonth = new DateTime($t); // 2015-08-01
+/* リンクエスケープ処理*/
+function h($p){
+  return htmlspecialchars($p,ENT_QUOTES,'UTF-8');
+}
+
+/* URLパラメータ抽出 */
+try {
+ if (!isset($_GET['m']) || !preg_match('/\A\d{4}-\d{2}\z/',$_GET['m'])){
+  throw new Exception();
+}
+$thisMonth = new DateTime($_GET['m']);//当月
+}catch(Exception $e){
+$thisMonth = new DateTime('first day of this month');
+}
+//var_dump($thisMonth);
+//exit;
 $yearMonth = $thisMonth->format('F Y');
 
+/*リンクのタイムスタンプ処理*/
+$dt = clone $thisMonth;
+$next = $dt->modify('+1 month')->format('Y-m');
+$dt = clone $thisMonth;
+$prev = $dt->modify('-1 month')->format('Y-m');
+
+
+/*  前月末週のフォーマット */
 $tail = '';
 $lastDayOfPrevMonth = new DateTime('last day of ' . $yearMonth . ' -1 month');
 while ($lastDayOfPrevMonth->format('w') < 6) {
   $tail = sprintf('<td class="gray">%d</td>', $lastDayOfPrevMonth->format('d')) . $tail;
-  $lastDayOfPrevMonth->sub(new DateInterval('P1D'));
+  $lastDayOfPrevMonth->sub(new DateInterval('P1D'));//sub()=Intervalから減算出力
 }
 
+/* 当月のDatePeriod*/
 $body = '';
 $period = new DatePeriod(
-  new DateTime('first day of ' . $yearMonth),
+  new DateTime('first day of ' . $yearMonth),//('first day of this month')=当月
   new DateInterval('P1D'),
-  new DateTime('first day of ' . $yearMonth . ' +1 month')
+  new DateTime('first day of ' . $yearMonth . ' +1 month')//(first day of next month)=来月
 );
+/*当月のフォーマット*/
+$today = new DateTime('today');
 foreach ($period as $day) {
-  if ($day->format('w') % 7 === 0) { $body .= '</tr><tr>'; }
-  $body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+  if ($day->format('w') % 7 === 0) { $body .= '</tr><tr>'; }//折り返し処理
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';//当日の強調表示のための三項演算
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'), $todayClass,$day->format('d'));//%s(string型式)の置換処理
 }
 
+/*来月のフォーマット*/
 $head = '';
 $firstDayOfNextMonth = new DateTime('first day of ' . $yearMonth . ' +1 month');
 while ($firstDayOfNextMonth->format('w') > 0) {
   $head .= sprintf('<td class="gray">%d</td>', $firstDayOfNextMonth->format('d'));
-  $firstDayOfNextMonth->add(new DateInterval('P1D'));
+  $firstDayOfNextMonth->add(new DateInterval('P1D'));//add()=Intervalに加算出力
 }
 
 $html = '<tr>' . $tail . $body . $head . '</tr>';
@@ -42,9 +69,10 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 <table>
 <thead>
 <tr>
-<th><a href="#"></a></th>
-<th colspan="5">Janualy 2019</th>
-<th><a href="#"></a></th>
+<!--------------------Month Link-------------------------------->
+<th><a href="/?m=<?php echo h($prev); ?>">&laquo;</a></th>
+<th colspan="5"><?php echo $yearMonth?></th>
+<th><a href="/?m=<?php echo h($next); ?>">&raquo;</a></th>
 </tr>
 </thead>
 <tbody>
@@ -58,6 +86,7 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 <td>Sat</td>
 </tr>
 <tr>
+<!----------------------------Dateperiod-------------------------------->
 <?php echo $html;?>
 <!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
@@ -79,7 +108,8 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 </tbody>
 <tfoot>
 <tr>
-<th colspan="7"><a href="">Today</a></th>
+<!------------------Today Link------------------------------->
+<th colspan="7"><a href="/">Today</a></th>
 </tr>
 </tfoot>
 </table>
