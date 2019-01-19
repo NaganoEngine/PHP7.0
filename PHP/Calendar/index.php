@@ -1,5 +1,13 @@
 <?php
-
+$body = '';
+$period = new DatePeriod(
+  new DateTime('2019-01-01'),
+  new DateInterval('P1D'),
+  new DateTime('2019-02-01')
+);
+foreach ($period as $day) {
+  $body .= sprintf('<td>%d</td>', $day->format('d'));//変換指定子に$dayが置換処理される
+}
 ?>
 <!DOCTYPE html>
 <html lang ="ja">
@@ -29,7 +37,8 @@
 <td>Sat</td>
 </tr>
 <tr>
-<td class="youbi_0">1</td>
+<?php echo $body; ?>
+<!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
 <td class="youbi_2">3</td>
 <td class="youbi_3">4</td>
@@ -44,7 +53,7 @@
 <td class="gray">2</td>
 <td class="gray">3</td>
 <td class="gray">4</td>
-<td class="gray">5</td>
+<td class="gray">5</td>-->
 </tr>
 </tbody>
 <tfoot>
