@@ -1,0 +1,35 @@
+body {
+  font-family: Arial,sans-serif;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  margin: 15px auto;
+  border: solid 1px #ddd;
+  border-collapse: collapse;
+}
+
+th {
+background: #eee;
+}
+
+th,td {
+  padding: 7px;
+}
+
+.youbi_0 {
+  color: red;
+}
+.youbi_6 {
+  color: blue;
+}
+.today {
+  font-weight: bold;
+}
+.gray {
+  color: #dedede;
+}
