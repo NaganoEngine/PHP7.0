@@ -1,11 +1,20 @@
 <?php
 $body = '';
-$begin = new DateTime('2019-1-01');//月の開始基点日
-$end = new DateTime('2019-2-01');//月の終わり基点日
+$begin = new DateTime('2015-8-01');//月の開始基点日
+$end = new DateTime('2015-9-01');//月の終わり基点日
 $interval=new DateInterval('P1D');//読込む日程の間隔
 $period = new DatePeriod($begin,$interval,$end);//DatePeriod規定クラス
 foreach ($period as $day) {
-  $body .= sprintf('<td>%d</td>', $day->format('d'));//変換指定子に$dayが置換処理される
+  if ($day->format('w') % 7 === 0) {
+    $body .= '</tr><tr>';
+  }
+$body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+}
+$head = '';
+$firstDayOfNextMonth = new DateTime('first day of next mont');
+while ($firstDayOfNextMonth->format('w') > 0) {
+  $head .= sprintf('<td class="gray">%d</td>', $firstDayOfNextMonth->format('d'));
+  $firstDayOfNextMonth->add(new DateInterval('P1D'));
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +45,7 @@ foreach ($period as $day) {
 <td>Sat</td>
 </tr>
 <tr>
-<?php echo $body; ?>
+<?php echo $body.$head;?>
 <!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
 <td class="youbi_2">3</td>
