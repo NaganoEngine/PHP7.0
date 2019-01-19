@@ -1,21 +1,34 @@
 <?php
-$body = '';
-$begin = new DateTime('2015-8-01');//月の開始基点日
-$end = new DateTime('2015-9-01');//月の終わり基点日
-$interval=new DateInterval('P1D');//読込む日程の間隔
-$period = new DatePeriod($begin,$interval,$end);//DatePeriod規定クラス
-foreach ($period as $day) {
-  if ($day->format('w') % 7 === 0) {
-    $body .= '</tr><tr>';
-  }
-$body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+$t = '2019-12';
+$thisMonth = new DateTime($t); // 2015-08-01
+$yearMonth = $thisMonth->format('F Y');
+
+$tail = '';
+$lastDayOfPrevMonth = new DateTime('last day of ' . $yearMonth . ' -1 month');
+while ($lastDayOfPrevMonth->format('w') < 6) {
+  $tail = sprintf('<td class="gray">%d</td>', $lastDayOfPrevMonth->format('d')) . $tail;
+  $lastDayOfPrevMonth->sub(new DateInterval('P1D'));
 }
+
+$body = '';
+$period = new DatePeriod(
+  new DateTime('first day of ' . $yearMonth),
+  new DateInterval('P1D'),
+  new DateTime('first day of ' . $yearMonth . ' +1 month')
+);
+foreach ($period as $day) {
+  if ($day->format('w') % 7 === 0) { $body .= '</tr><tr>'; }
+  $body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+}
+
 $head = '';
-$firstDayOfNextMonth = new DateTime('first day of next mont');
+$firstDayOfNextMonth = new DateTime('first day of ' . $yearMonth . ' +1 month');
 while ($firstDayOfNextMonth->format('w') > 0) {
   $head .= sprintf('<td class="gray">%d</td>', $firstDayOfNextMonth->format('d'));
   $firstDayOfNextMonth->add(new DateInterval('P1D'));
 }
+
+$html = '<tr>' . $tail . $body . $head . '</tr>';
 ?>
 <!DOCTYPE html>
 <html lang ="ja">
@@ -45,7 +58,7 @@ while ($firstDayOfNextMonth->format('w') > 0) {
 <td>Sat</td>
 </tr>
 <tr>
-<?php echo $body.$head;?>
+<?php echo $html;?>
 <!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
 <td class="youbi_2">3</td>
