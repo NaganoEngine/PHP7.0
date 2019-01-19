@@ -1,10 +1,9 @@
 <?php
 $body = '';
-$period = new DatePeriod(
-  new DateTime('2019-01-01'),
-  new DateInterval('P1D'),
-  new DateTime('2019-02-01')
-);
+$begin = new DateTime('2019-1-01');//月の開始基点日
+$end = new DateTime('2019-2-01');//月の終わり基点日
+$interval=new DateInterval('P1D');//読込む日程の間隔
+$period = new DatePeriod($begin,$interval,$end);//DatePeriod規定クラス
 foreach ($period as $day) {
   $body .= sprintf('<td>%d</td>', $day->format('d'));//変換指定子に$dayが置換処理される
 }
