@@ -1,4 +1,5 @@
 <?php
+
 /* リンクエスケープ処理*/
 function h($p){
   return htmlspecialchars($p,ENT_QUOTES,'UTF-8');
@@ -35,17 +36,47 @@ while ($lastDayOfPrevMonth->format('w') < 6) {
 /* 当月のDatePeriod*/
 $body = '';
 $period = new DatePeriod(
-  new DateTime('first day of ' . $yearMonth),//('first day of this month')=当月
+  new DateTime('first day of ' . $yearMonth),//(PHP相対書式)=当月
   new DateInterval('P1D'),
-  new DateTime('first day of ' . $yearMonth . ' +1 month')//(first day of next month)=来月
+  new DateTime('first day of ' . $yearMonth . ' +1 month')//(PHP相対書式)=来月
 );
 /*当月のフォーマット*/
-$today = new DateTime('today');
+$today = new DateTime('today');//(PHP相対書式)
 foreach ($period as $day) {
-  if ($day->format('w') % 7 === 0) { $body .= '</tr><tr>'; }//折り返し処理
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';//当日の強調表示のための三項演算
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'), $todayClass,$day->format('d'));//%s(string型式)の置換処理
+switch ($day->format('w')) {
+  case 0:
+  $body .= '</tr><tr>';
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">(%d)</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 1:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 2:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 3:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 4:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 5:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
+  case 6:
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
+  $body .= sprintf('<td class="youbi_%d %s">[%d]</td>', $day->format('w'),$todayClass,$day->format('d'));
+  break;
 }
+
+}//折り返し処理
+
 
 /*来月のフォーマット*/
 $head = '';
