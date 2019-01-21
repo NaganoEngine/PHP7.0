@@ -1,109 +1,28 @@
 <?php
+require "Calendar.php";
 
 /* リンクエスケープ処理*/
 function h($p){
   return htmlspecialchars($p,ENT_QUOTES,'UTF-8');
 }
 
-/* URLパラメータ抽出 */
-try {
- if (!isset($_GET['m']) || !preg_match('/\A\d{4}-\d{2}\z/',$_GET['m'])){
-  throw new Exception();
-}
-$thisMonth = new DateTime($_GET['m']);//当月
-}catch(Exception $e){
-$thisMonth = new DateTime('first day of this month');
-}
-//var_dump($thisMonth);
-//exit;
-$yearMonth = $thisMonth->format('F Y');
-
-/*リンクのタイムスタンプ処理*/
-$dt = clone $thisMonth;
-$next = $dt->modify('+1 month')->format('Y-m');
-$dt = clone $thisMonth;
-$prev = $dt->modify('-1 month')->format('Y-m');
-
-
-/*  前月末週のフォーマット */
-$tail = '';
-$lastDayOfPrevMonth = new DateTime('last day of ' . $yearMonth . ' -1 month');
-while ($lastDayOfPrevMonth->format('w') < 6) {
-  $tail = sprintf('<td class="gray">%d</td>', $lastDayOfPrevMonth->format('d')) . $tail;
-  $lastDayOfPrevMonth->sub(new DateInterval('P1D'));//sub()=Intervalから減算出力
-}
-
-/* 当月のDatePeriod*/
-$body = '';
-$period = new DatePeriod(
-  new DateTime('first day of ' . $yearMonth),//(PHP相対書式)=当月
-  new DateInterval('P1D'),
-  new DateTime('first day of ' . $yearMonth . ' +1 month')//(PHP相対書式)=来月
-);
-/*当月のフォーマット*/
-$today = new DateTime('today');//(PHP相対書式)
-foreach ($period as $day) {
-switch ($day->format('w')) {
-  case 0:
-  $body .= '</tr><tr>';
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">(%d)</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 1:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 2:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 3:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 4:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 5:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-  case 6:
-  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-  $body .= sprintf('<td class="youbi_%d %s">[%d]</td>', $day->format('w'),$todayClass,$day->format('d'));
-  break;
-}
-
-}//折り返し処理
-
-
-/*来月のフォーマット*/
-$head = '';
-$firstDayOfNextMonth = new DateTime('first day of ' . $yearMonth . ' +1 month');
-while ($firstDayOfNextMonth->format('w') > 0) {
-  $head .= sprintf('<td class="gray">%d</td>', $firstDayOfNextMonth->format('d'));
-  $firstDayOfNextMonth->add(new DateInterval('P1D'));//add()=Intervalに加算出力
-}
-
-$html = '<tr>' . $tail . $body . $head . '</tr>';
+$call_calss1 = new MyApp\Calendar();//Claendar.php
 ?>
 <!DOCTYPE html>
 <html lang ="ja">
 <head>
 <meta charset="utf-8">
-<title>Calendar_Plogram カレンダープログラム</title>
+<title>Calendar_Plogram/カレンダープログラム</title>
 <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-
 <table>
 <thead>
 <tr>
 <!--Month Link-------------------------------->
-<th><a href="/?m=<?php echo h($prev); ?>">&laquo;</a></th>
-<th colspan="5"><?php echo $yearMonth?></th>
-<th><a href="/?m=<?php echo h($next); ?>">&raquo;</a></th>
+<th><a href="/?m=<?php echo h($call_calss1->prev); ?>">&laquo;</a></th>
+<th colspan="5"><?php echo h($call_calss1->yearMonth); ?></th>
+<th><a href="/?m=<?php echo h($call_calss1->next); ?>">&raquo;</a></th>
 </tr>
 </thead>
 <tbody>
@@ -118,7 +37,7 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
 </tr>
 <tr>
 <!--Dateperiod-------------------------------->
-<?php echo $html;?>
+<?php echo $call_calss1->show();?>
 <!--<td class="youbi_0">1</td>
 <td class="youbi_1">2</td>
 <td class="youbi_2">3</td>
