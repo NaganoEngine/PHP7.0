@@ -11,6 +11,8 @@ table {
   margin: 15px auto;
   border: solid 1px #ddd;
   border-collapse: collapse;
+  position: relative;
+  left: -350px;
 }
 
 th {
@@ -24,8 +26,14 @@ th,td {
 .youbi_0 {
   color: red;
 }
+
+
 .youbi_6 {
   color: blue;
+}
+.national_holiday {
+  color: red;
+  background-color:pink;
 }
 .today {
   font-weight: bold;

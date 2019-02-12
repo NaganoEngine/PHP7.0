@@ -14,6 +14,7 @@ $call_calss1 = new MyApp\Calendar();//Claendar.php
 <meta charset="utf-8">
 <title>Calendar_Plogram/カレンダープログラム</title>
 <link href="styles.css" rel="stylesheet">
+<script src="reserve.js"></script>
 </head>
 <body>
 <table>

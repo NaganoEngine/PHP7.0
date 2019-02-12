@@ -61,36 +61,86 @@ private function _getBody(){
   );
   /*当月のフォーマット*/
   $today = new \DateTime('today');//(PHP相対書式)
-  foreach ($period as $day) {
-  switch ($day->format('w')) {
+  $naday = [
+  new \DateTime('2019-01-01'),new \DateTime('2019-01-14'),new \DateTime('2019-02-11'),new \DateTime('2019-03-21'),
+  new \DateTime('2019-04-29'),new \DateTime('2019-04-30'),new \DateTime('2019-05-01'),new \DateTime('2019-05-02'),
+  new \DateTime('2019-05-03'),new \DateTime('2019-05-04'),new \DateTime('2019-05-05'),new \DateTime('2019-05-06'),
+  new \DateTime('2019-07-15'),new \DateTime('2019-08-11'),new \DateTime('2019-08-12'),new \DateTime('2019-09-16'),
+  new \DateTime('2019-10-14'),new \DateTime('2019-10-22'),new \DateTime('2019-11-03'),new \DateTime('2019-11-04'),
+  new \DateTime('2019-11-23'),new \DateTime('2020-01-01')
+  ];
+
+foreach ($period as $day) {
+switch ($day->format('w')) {
     case 0:
     $body .= '</tr><tr>';
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">'.'(%d)'.'</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 1:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 2:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 3:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 4:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 5:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">%d</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
+
     case 6:
+    if( in_array(new \DateTime($day->format('Y-m-d')),$naday) ){
+      $nadayClass="national_holiday";
+    }else{
+      $nadayClass="";
+    }
     $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d'))? 'today':'';
-    $body .= sprintf('<td class="youbi_%d %s">[%d]</td>', $day->format('w'),$todayClass,$day->format('d'));
+    $body .= sprintf('<td class="youbi_%d %s %s">%d</td>',$day->format('w'), $todayClass,$nadayClass,$day->format('d'));
     break;
   }//switch_end
 }//_foreah_end
