@@ -9,12 +9,12 @@ $this->PDO=$this->PDO();
 $this->All=$this->TOP0();
 }//Construct_END
 
-const DB_DATABASE='';
-const DB_USERNAME='';
-const DB_PASSWORD='';
-const DB_HOST='';
+const DB_DATABASE='muslim333_asset';
+const DB_USERNAME='muslim333_moon';
+const DB_PASSWORD='wakaba311';
+const DB_HOST='mysql1.php.xdomain.ne.jp';
 const DB_PORT='port=3306';
-const PDO_DSN='';
+const PDO_DSN='mysql:dbname=muslim333_asset; host=mysql1.php.xdomain.ne.jp; port=3306;';
 
 public function PDO(){
 /*Open Data Base*/
@@ -33,8 +33,7 @@ public function PDO(){
 public function STMTS(){
 // select all
 $con=$this->PDO();
-$stmt = $con->prepare("select * from asset_all_data where Upload_Number <= ?");
-$stmt->execute([1]);
+$stmt = $con->query("select * from asset_all_data");
 $stmts = $stmt->fetchAll();
 return $stmts;
 }//Method_STMTS_END
@@ -55,15 +54,57 @@ $File3 = $stmts[$i]['file3'];
 $File4 = $stmts[$i]['file4'];
 $File5 = $stmts[$i]['file5'];
 
+if(isset($File1) && !empty($File1) && isset($File2) && empty($File2) && isset($File3) && empty($File3) && isset($File4) && empty($File4) && isset($File5) && empty($File5)){
 echo $this->All='<dl>'.
 '<dt id="Top_'.$i.'">'.$Top.'</dt>'.
 '<dd>'.$Art.'</dd>'.
-'<dd>'.'<img src="'.$File1.'"><img src="'.$File2.'"></dd>'.
-'<dd>'.$File3.'</dd>'.
-'<dd>'.$File4.'</dd>'.
-'<dd>'.$File5.'</dd>'.
-'<dd id="sharebuttons_'.$i.'"></dt>'.
-'</dl>';
+'<dd><img src="'.$File1.'"></dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
+elseif(isset($File1) && !empty($File1) && isset($File2) && !empty($File2) && isset($File3) && empty($File3) && isset($File4) && empty($File4) && isset($File5) && empty($File5)){
+echo $this->All='<dl>'.
+'<dt id="Top_'.$i.'">'.$Top.'</dt>'.
+'<dd>'.$Art.'</dd>'.
+'<dd><img src="'.$File1.'"><img src="'.$File2.'"></dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
+elseif(isset($File1) && !empty($File1) && isset($File2) && !empty($File2) && isset($File3) && !empty($File3) && isset($File4) && empty($File4) && isset($File5) && empty($File5)){
+echo $this->All='<dl>'.
+'<dt id="Top_'.$i.'">'.$Top.'</dt>'.
+'<dd>'.$Art.'</dd>'.
+'<dd><img src="'.$File1.'"><img src="'.$File2.'"></dd>'.
+'<dd><img src="'.$File3.'"></dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
+else if(isset($File1) && !empty($File1) && isset($File2) && !empty($File2) && isset($File3) && !empty($File3) && isset($File4) && !empty($File4) && isset($File5) && empty($File5)){
+echo $this->All='<dl>'.
+'<dt id="Top_'.$i.'">'.$Top.'</dt>'.
+'<dd>'.$Art.'</dd>'.
+'<dd><img src="'.$File1.'"><img src="'.$File2.'"></dd>'.
+'<dd><img src="'.$File3.'"><img src="'.$File4.'"></dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
+else if(isset($File1) && !empty($File1) && isset($File2) && !empty($File2) && isset($File3) && !empty($File3) && isset($File4) && !empty($File4) && isset($File5) && !empty($File5)){
+echo $this->All='<dl>'.
+'<dt id="Top_'.$i.'">'.$Top.'</dt>'.
+'<dd>'.$Art.'</dd>'.
+'<dd><img src="'.$File1.'"><img src="'.$File2.'"></dd>'.
+'<dd><img src="'.$File3.'"><img src="'.$File4.'"></dd>'.
+'<dd><img src="'.$File5.'"></dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
+else{
+echo $this->All='<dl>'.
+'<dt id="Top_'.$i.'">'.$Top.'</dt>'.
+'<dd>'.$Art.'</dd>'.
+'<dd id="sharebuttons_'.$i.'" class="share_length"></dd>'.
+'</dl>'.'<br><br>';
+}
 break;
 }//switch
 }//for
@@ -79,3 +120,4 @@ unset($con);//Connecction_End
 }//class_end
 
 ?>
+
