@@ -9,12 +9,12 @@ $this->PDO=$this->PDO();
 $this->All=$this->TOP0();
 }//Construct_END
 
-const DB_DATABASE='muslim333_asset';
-const DB_USERNAME='muslim333_moon';
-const DB_PASSWORD='wakaba311';
-const DB_HOST='mysql1.php.xdomain.ne.jp';
+const DB_DATABASE='';
+const DB_USERNAME='';
+const DB_PASSWORD='';
+const DB_HOST='';
 const DB_PORT='port=3306';
-const PDO_DSN='mysql:dbname=muslim333_asset; host=mysql1.php.xdomain.ne.jp; port=3306;';
+const PDO_DSN='';
 
 public function PDO(){
 /*Open Data Base*/
