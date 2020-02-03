@@ -1,0 +1,57 @@
+<?php
+get_header();
+ini_set("display_errors",1);
+
+//------------------------Browser_Check_Begin---------------------------------
+$browser = strtolower($_SERVER['HTTP_USER_AGENT']);
+$css_style = null;
+$css_slide = null;
+$js_main  = null;
+$js_flex = null;
+$flexibility =null;
+
+if (strstr($browser,'ipad') || strstr($browser,'iphone') || strstr($browser,'ipod')){
+
+$css_style = get_template_directory_uri()."/CSS/style_safari.css";
+
+} elseif (strstr($browser , 'edge')) {
+
+$css_style = get_template_directory_uri()."/CSS/style_ms.css";
+
+} elseif (strstr($browser , 'trident') || strstr($browser , 'msie')) {
+
+$css_style = get_template_directory_uri()."/CSS/style_ms.css";
+
+} elseif (strstr($browser , 'chrome')) {
+
+$css_style = get_template_directory_uri()."/style.css";
+
+} elseif (strstr($browser , 'firefox')) {
+
+$css_style = get_template_directory_uri()."/style.css";
+
+} elseif (strstr($browser , 'opera')) {
+
+$css_style = get_template_directory_uri()."/style.css";
+
+} elseif (strstr($browser , 'safari')) {
+
+$css_style = get_template_directory_uri()."/CSS/style_safari.css";
+
+
+} else {
+
+$css_style = get_template_directory_uri()."/style.css";
+
+}
+
+
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title><?php wp_title('|', true, 'right'); bloginfo('name'); ?></title>
+<!-- <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/MATERIAL/logo.png"> -->
+<link rel="stylesheet" type="text/css" href="<?php echo $css_style; ?>">
