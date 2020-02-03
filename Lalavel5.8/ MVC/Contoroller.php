@@ -41,21 +41,21 @@ return view('Gets/regist.new_registration_complete' , compact('con_arr'));
 }
 
 // ------------
-public function suket_view(){
+public function _view(){
 $con_arr = [" | 注目の",];
-return view('Gets/search.suket_view' , compact('con_arr'));
+return view('Gets/search._view' , compact('con_arr'));
 }
-public function suket_search(){
+public function _search(){
 $con_arr = [" | 絞り込み検索",];
-return view('Gets/search.suket_search' , compact('con_arr'));
+return view('Gets/search._search' , compact('con_arr'));
 }
-public function suket_search_map(){
+public function _search_map(){
 $con_arr = [" | マップ",];
-return view('Gets/search.suket_search_map' , compact('con_arr'));
+return view('Gets/search._search_map' , compact('con_arr'));
 }
-public function suket_search_list(){
+public function _search_list(){
 $con_arr = [" | リスト",];
-return view('Gets/search.suket_search_list', compact('con_arr'));
+return view('Gets/search._search_list', compact('con_arr'));
 }
 
 // ------------
